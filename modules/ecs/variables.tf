@@ -8,11 +8,6 @@ variable "task_execution_role_arn" {
   nullable    = false
 }
 
-variable "security_group" {
-  type = string
-  nullable    = false
-}
-
 variable "subnets" {
   type = list(string)
   nullable    = false

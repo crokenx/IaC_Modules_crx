@@ -2,6 +2,24 @@ resource "aws_ecs_cluster" "ecs_cluster" {
   name = "${var.capacity}-cluster"
 }
 
+resource "aws_security_group" "ecs_sg" {
+  vpc_id = data.aws_vpc.target_vpc.id
+
+  ingress {
+    from_port       = 8080
+    to_port         = 8080
+    protocol        = "tcp"
+    security_groups = [data.aws_security_group.sg_alb.id]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_ecs_task_definition" "ecs_service_task" {
   family                   = "${var.capacity}-service-task"
   network_mode             = "awsvpc"
@@ -65,7 +83,7 @@ resource "aws_ecs_service" "ecs_service_ms" {
 
   network_configuration {
     subnets         = var.subnets
-    security_groups = [var.security_group]
+    security_groups = [aws_security_group.ecs_sg.id]
     assign_public_ip = true 
   }
 

@@ -3,11 +3,6 @@ variable "subnet_ids" {
   nullable    = false
 }
 
-variable "security_group" {
-  type = string
-  nullable    = false
-}
-
 variable "db_username" {
   type = string
   nullable    = false

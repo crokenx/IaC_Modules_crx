@@ -21,10 +21,3 @@ variable "availability_zones" {
   default = ["us-east-1a", "us-east-1b"]
   nullable    = false
 }
-
-variable "tags" {
-  type = map(string)
-  default = {
-    Name = "Main VPC"
-  }
-}
